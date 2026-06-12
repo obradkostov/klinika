@@ -1,14 +1,14 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { PatientsService } from "./patients.service";
 
-@Controller('doctors')
+@Controller('patients')
 export class PatientsController{
     constructor(private patientsService:PatientsService){}
     @Get()
     findAll(){
         return this.patientsService.findAll();
     }
-    @Get('id')
+    @Get(':id')
     findOne(@Param('id')id:string){
         return this.patientsService.findOne(+id);
     }   

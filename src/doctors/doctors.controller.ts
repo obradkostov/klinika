@@ -8,7 +8,7 @@ export class DoctorsController{
     findAll(){
         return this.doctorsService.findAll();
     }
-    @Get('id')
+    @Get(':id')
     findOne(@Param('id')id:string){
         return this.doctorsService.findOne(+id);
     }   
