@@ -1,1 +1,13 @@
-<p>register works!</p>
+<div>
+    <h2>Registracija</h2>
+    <div *ngIf="error">{{error}}</div>
+    <input [(ngModel)]="email" type="email" placeholder="Email">
+    <input [(ngModel)]="password" type="password" placeholder="Lozinka">
+    <select [(ngModel)]="role">
+        <option value="PATIENT">Pacijent</option>
+        <option value="DOCTOR">Doktor</option>
+        <option value="NURSE">Medicinska sestra</option>
+    </select>
+    <button (click)="register()">Registruj se</button>
+    <a routerLink="/login">Vec imate nalog? Prijavite se</a>
+</div>
