@@ -1,6 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
 @Injectable()
 export class AuthService {
@@ -11,8 +10,7 @@ export class AuthService {
     async login(email:string,password:string){
         const user=await this.usersService.findByEmail(email);
         if(!user) throw new UnauthorizedException("Nevazeca email adresa");
-        const valid=await bcrypt.compare(password,user.password);
-        if(!user) throw new UnauthorizedException("Nevazeca email adresa");
+        if (user.password !== password) throw new UnauthorizedException('Nevazeca lozinka');
         const payload={sub:user.id,email:user.email,role:user.role};
         return {
             access_token:this.jwtService.sign(payload),
