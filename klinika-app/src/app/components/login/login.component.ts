@@ -20,11 +20,18 @@ export class LoginComponent {
         this.authService.login(this.email, this.password).subscribe({
             next: (res) => {
                 this.authService.saveToken(res.access_token);
-                this.router.navigate(['/dashboard']);
+                const role=this.getRoleFromToken(res.access_token);
+                if(role=='ADMIN')this.router.navigate(['/admin-dashboard']);
+                else if(role=='DOCTOR')this.router.navigate(['/doctor-dashboard']);
+                else if(role=='PATIENT')this.router.navigate(['/patient-dashboard']);
             },
             error: () => {
                 this.error = 'Pogresan email i lozinka';
             }
         });
+    }
+    getRoleFromToken(token:string):string{
+        const payload=JSON.parse(atob(token.split('.')[1]));
+        return payload.role;
     }
 }
