@@ -23,16 +23,10 @@ export class AppointmentList implements OnInit {
     this.loadAppointments();
   }
   loadAppointments() {
-    console.log('load called, appointments before:', this.appointments.length);
-
     this.appointmentService.getAll().subscribe({
       next: (data) => {
-        console.log('data received:', data.length);
-
         this.appointments = [...data];
         this.cdr.detectChanges();
-        console.log('appointments after:', this.appointments.length);
-
       },
       error: (err) => console.error(err)
     });
