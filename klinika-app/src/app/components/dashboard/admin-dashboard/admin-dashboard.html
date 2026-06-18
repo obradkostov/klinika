@@ -1,10 +1,11 @@
 <div>
-<h2>Admin Dashboard</h2>
-<button (click)="logout()">Odjavi se</button>
-<h3>Lista Doktora</h3>
-<ul>
-    <li *ngFor="let doctor of doctors">
-        {{doctor.firstName}}{{doctor.lastName}}-{{doctor.specialization}}
-    </li>
-</ul>
+    <h2>Admin Dashboard</h2>
+    <button (click)="logout()">Odjavi se</button>
+    <a routerLink="/appointments">Termini</a>
+    <h3>Lista Doktora</h3>
+    <ul>
+        <li *ngFor="let doctor of doctors">
+            {{doctor.firstName}}{{doctor.lastName}}-{{doctor.specialization}}
+        </li>
+    </ul>
 </div>

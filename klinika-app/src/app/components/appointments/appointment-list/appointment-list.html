@@ -1,1 +1,15 @@
-<p>appointment-list works!</p>
+<div>
+    <h2>Termini</h2>
+    <h3>Zakazani termini</h3>
+    <input [(ngModel)]="dateTime" name="dateTime" type="datetime-local" placeholder="Datum i vreme">
+    <input [(ngModel)]="reason" name="reason" type="text" placeholder="Razlog posete">
+    <input [(ngModel)]="doctorId" name="doctorId" type="number" placeholder="ID doktora">
+    <input [(ngModel)]="patientId" name="patientId" type="number" placeholder="ID pacijenta">
+    <button type="button" (click)="createAppointment()">Zakazi termin</button>
+    <h3>Lista termina</h3>
+    <ul>
+        <li *ngFor="let a of appointments">
+            {{ a.dateTime | date:'dd.MM.yyyy HH:mm' }} - {{ a.reason }} - {{ a.status }}
+        </li>
+    </ul>
+</div>

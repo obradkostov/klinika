@@ -32,7 +32,12 @@ export class AppointmentsService {
         doctorId: number,
         patientId: number
     }) {
-        return this.prisma.appointment.create({ data });
+        return this.prisma.appointment.create({
+             data:{
+                ...data,
+                dateTime:new Date(data.dateTime)
+             } 
+            });
     }
     async updateStatus(id: number,status:string) {
         return this.prisma.appointment.update({ where: { id }, data:{status:status as any} });
