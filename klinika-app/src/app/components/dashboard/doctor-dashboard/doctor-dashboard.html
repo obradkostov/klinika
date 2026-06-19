@@ -1,4 +1,11 @@
 <div>
 <h2>Doctor Dashboard</h2>
+<h2>{{ userName }}</h2>
 <button (click)="logout()">Odjavi se</button>
+<h3>Moji termini</h3>
+<ul>
+    <li *ngFor="let a of appointments">
+        {{a.dateTime | date:'dd.mm.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - {{a.patient?.firstName}} {{a.patient?.lastName}}
+    </li>
+</ul>
 </div>

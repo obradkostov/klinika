@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { Appointments } from '../../../services/appointments';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -9,10 +10,29 @@ import { Router } from '@angular/router';
   templateUrl: './doctor-dashboard.html',
   styleUrl: './doctor-dashboard.css',
 })
-export class DoctorDashboard implements OnInit{
-  constructor(private authService:AuthService,private router:Router){}
-  ngOnInit(){}
-  logout(){
+export class DoctorDashboard implements OnInit {
+  appointments: any[] = [];
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private appointmentsService: Appointments,
+    private cdr: ChangeDetectorRef
+  ) { }
+  userName='';
+  ngOnInit() {
+    const user = this.authService.getUserFromToken();
+    this.userName=user?.email || '';
+    if (user) {
+      this.appointmentsService.getAll().subscribe({
+        next: (data) => {
+          this.appointments = data.filter((a: any) => a.doctor?.userId === user.sub);
+          this.cdr.markForCheck();
+        },
+        error: (err) => console.error(err)
+      });
+    }
+  }
+  logout() {
     this.authService.logOut();
     this.router.navigate(['/login']);
   }

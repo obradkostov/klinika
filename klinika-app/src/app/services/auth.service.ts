@@ -17,11 +17,15 @@ export class AuthService{
     saveToken(token:string):void{
         localStorage.setItem('token',token);
     }
-    getToken(token:string):void{
-        localStorage.getItem('token');
+    getToken():string|null{
+        return localStorage.getItem('token');
     }
     logOut():void{
         localStorage.removeItem('token');
     }
-
+    getUserFromToken():any{
+        const token=this.getToken();
+        if(!token)return null;
+        return JSON.parse(atob(token.split('.')[1]));
+    }
 }
