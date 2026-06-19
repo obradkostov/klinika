@@ -3,8 +3,17 @@
     <h3>Zakazani termini</h3>
     <input [(ngModel)]="dateTime" name="dateTime" type="datetime-local" placeholder="Datum i vreme">
     <input [(ngModel)]="reason" name="reason" type="text" placeholder="Razlog posete">
-    <input [(ngModel)]="doctorId" name="doctorId" type="number" placeholder="ID doktora">
+    <!--<input [(ngModel)]="doctorId" name="doctorId" type="number" placeholder="ID doktora">
     <input [(ngModel)]="patientId" name="patientId" type="number" placeholder="ID pacijenta">
+-->
+    <select [(ngModel)]="doctorId" name="doctorId">
+        <option [value]="0" disabled>Izaberi doktora</option>
+        <option *ngFor="let d of doctorList" [value]="d.id">{{d.firstName}} {{d.lastName}}</option>
+    </select>
+    <select [(ngModel)]="patientId" name="patientId">
+        <option [value]="0" disabled>Izaberi pacijenta</option>
+        <option *ngFor="let p of patientsList" [value]="p.id">{{p.firstName}} {{p.lastName}}</option>
+    </select>
     <button type="button" (click)="createAppointment()">Zakazi termin</button>
     <h3>Lista termina</h3>
     <ul>

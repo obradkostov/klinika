@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Appointments } from '../../../services/appointments';
+import { Doctors } from '../../../services/doctors';
+import { Patients } from '../../../services/patients';
 
 @Component({
   selector: 'app-appointment-list',
@@ -16,17 +18,24 @@ export class AppointmentList implements OnInit {
   reason = '';
   doctorId: number = 0;
   patientId: number = 0;
-  constructor(private appointmentService: Appointments,
-    private cdr: ChangeDetectorRef
+  doctorList:any[]=[];
+  patientsList:any[]=[];
+  constructor(
+    private appointmentService: Appointments,
+    private cdr: ChangeDetectorRef,
+    private doctorService:Doctors,
+    private patientsService:Patients
   ) { }
   ngOnInit() {
     this.loadAppointments();
+    this.doctorService.getAll().subscribe(data=>this.doctorList=data);
+    this.patientsService.getAll().subscribe(data=>this.patientsList=data);
   }
   loadAppointments() {
     this.appointmentService.getAll().subscribe({
       next: (data) => {
         this.appointments = [...data];
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       },
       error: (err) => console.error(err)
     });
@@ -38,8 +47,8 @@ export class AppointmentList implements OnInit {
 
       dateTime: this.dateTime + ':00.000Z',
       reason: this.reason,
-      doctorId: this.doctorId,
-      patientId: this.patientId
+      doctorId: +this.doctorId,
+      patientId: +this.patientId
     }).subscribe({
       next: () => {
         this.loadAppointments();

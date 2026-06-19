@@ -1,6 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Patients {}
+export class Patients {
+  private apiUrl='http://localhost:3000/patients';
+  constructor(private http:HttpClient){}
+  getAll():Observable<any>{
+    return this.http.get(this.apiUrl);
+  }
+}
