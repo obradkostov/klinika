@@ -14,4 +14,7 @@ export class Appointments {
   create(data:{dateTime:string,reason:string,doctorId:number,patientId:number}):Observable<any>{
     return this.http.post(this.apiUrl,data);
   }
+  updateStatus(id:number,status:string):Observable<any>{
+    return this.http.put(`${this.apiUrl}/${id}/status`,{status});
+  }
 }

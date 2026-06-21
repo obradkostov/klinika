@@ -32,6 +32,14 @@ export class DoctorDashboard implements OnInit {
       });
     }
   }
+  updateStatus(appointmentId:number,status:string){
+    this.appointmentsService.updateStatus(appointmentId,status).subscribe({
+      next:()=>{
+        this.ngOnInit();
+      },
+      error:(err)=>console.error(err)   
+    });
+  }
   logout() {
     this.authService.logOut();
     this.router.navigate(['/login']);

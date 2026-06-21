@@ -25,8 +25,8 @@ export class AppointmentsController {
         return this.appointmentsService.create(body);
     }
     @Put(':id/status')
-    update(@Param('id') id: string, @Body() status: string) {
-        return this.appointmentsService.updateStatus(+id, status);
+    update(@Param('id') id: string, @Body() body:{status: string}) {
+        return this.appointmentsService.updateStatus(+id, body.status);
     }
     @Delete('id')
     remove(@Param('id') id: number) {
