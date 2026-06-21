@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Appointments } from '../../../services/appointments';
 
 @Component({
   selector: 'app-doctor-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './doctor-dashboard.html',
   styleUrl: './doctor-dashboard.css',
 })

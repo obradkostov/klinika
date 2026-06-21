@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Appointments } from '../../../services/appointments';
 import { Doctors } from '../../../services/doctors';
 import { Patients } from '../../../services/patients';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-appointment-list',
@@ -24,7 +26,9 @@ export class AppointmentList implements OnInit {
     private appointmentService: Appointments,
     private cdr: ChangeDetectorRef,
     private doctorService:Doctors,
-    private patientsService:Patients
+    private patientsService:Patients,
+    private router:Router,
+    private authService:AuthService
   ) { }
   ngOnInit() {
     this.loadAppointments();
@@ -60,4 +64,11 @@ export class AppointmentList implements OnInit {
       error: (err) => console.error(err)
     });
   }
+  goBack(){
+    const user=this.authService.getUserFromToken();
+    if(user?.role==='ADMIN') this.router.navigate(['/admin-dashboard']);
+    else if(user?.role==='DOCTOR') this.router.navigate(['/doctor-dashboard']);
+    else if(user?.role==='PATIENT') this.router.navigate(['/patient-dashboard']);
+  }
 }
+ 

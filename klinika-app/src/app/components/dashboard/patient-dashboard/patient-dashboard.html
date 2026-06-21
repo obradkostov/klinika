@@ -2,6 +2,7 @@
   <h2>Patient Dashboard</h2>
   <h2>{{userName}}</h2>
   <button (click)="logout()">Odjavi se</button>
+  <a routerLink="/appointments">Zakaži/Vidi sve termine</a>
   <h3>Moji termini</h3>
   <ul>
     <li *ngFor="let a of appointments">
