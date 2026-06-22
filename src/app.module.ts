@@ -8,9 +8,10 @@ import { DoctorsModule } from './doctors/doctors.module';
 import { PatientsModule } from './patients/patients.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { PrismaService } from './prisma/prisma.service';
+import { NursesModule } from './nurses/nurses.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, DoctorsModule, PatientsModule, AppointmentsModule,PrismaModule],
+  imports: [UsersModule, AuthModule, DoctorsModule, PatientsModule, AppointmentsModule,PrismaModule,NursesModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
