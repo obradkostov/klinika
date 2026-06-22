@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Doctors } from '../../../services/doctors';
 import { CommonModule } from '@angular/common';
 import { Patients } from '../../../services/patients';
+import { Nurses } from '../../../services/nurses';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -11,17 +12,19 @@ import { Patients } from '../../../services/patients';
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
-export class AdminDashboard implements OnInit{
-  doctors:any[]=[];
-  patients:any[]=[];
-   constructor(
+export class AdminDashboard implements OnInit {
+  doctors: any[] = [];
+  patients: any[] = [];
+  nurses: any[] = [];
+  constructor(
     private authService: AuthService,
     private router: Router,
     private doctorsService: Doctors,
-    private patientsService:Patients,
+    private patientsService: Patients,
+    private nursesService: Nurses,
     private cdr: ChangeDetectorRef
 
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.doctorsService.getAll().subscribe({
@@ -36,6 +39,15 @@ export class AdminDashboard implements OnInit{
     this.patientsService.getAll().subscribe({
       next: (data) => {
         this.patients = data;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+    this.nursesService.getAll().subscribe({
+      next: (data) => {
+        this.nurses = data;
         this.cdr.markForCheck();
       },
       error: (err) => {
