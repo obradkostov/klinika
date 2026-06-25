@@ -9,6 +9,12 @@
         {{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - {{a.patient?.firstName}} {{a.patient?.lastName}}
         <button *ngIf="a.status==='PENDING'" (click)="updateStatus(a.id,'CONFIRMED')">Potvrdi</button>
         <button *ngIf="a.status==='PENDING'" (click)="updateStatus(a.id,'CANCELLED')">Otkazi</button>   
+        <button *ngIf="a.status==='CONFIRMED'" (click)="openDiagnosisForm(a.id)">Upisi nalaz</button>
+        <div *ngIf="selectedAppointmentId===a.id">
+            <input [(ngModel)]="diagnosisDescription" name="description" placeholder="Opis dijagnoze">
+            <input [(ngModel)]="diagnosisPrescription" name="prescription" placeholder="Recept (opciono)">
+            <button (click)="submitDiagnosis()">Sacuvaj nalaz</button>
+        </div>
     </li>
 </ul>
 </div>
