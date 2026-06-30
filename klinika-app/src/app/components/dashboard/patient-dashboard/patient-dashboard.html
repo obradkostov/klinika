@@ -6,7 +6,12 @@
   <h3>Moji termini</h3>
   <ul>
     <li *ngFor="let a of appointments">
-      {{a.dateTime | date:'dd.mm.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - Dr. {{a.doctor?.firstName}} {{a.doctor?.lastName}}
+      {{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - Dr. {{a.doctor?.firstName}}
+      {{a.doctor?.lastName}}
+      <div *ngIf="a.diagnosis">
+        <strong>Nalaz:</strong> {{a.diagnosis.description}}
+        <span *ngIf="a.diagnosis.prescription"> | Recept: {{a.diagnosis.prescription}}</span>
+      </div>
     </li>
   </ul>
 </div>
