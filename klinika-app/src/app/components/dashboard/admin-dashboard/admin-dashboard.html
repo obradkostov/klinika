@@ -8,7 +8,8 @@
         <h3>Lista Doktora</h3>
         <ul>
             <li *ngFor="let doctor of doctors">
-                {{doctor.firstName}} {{doctor.lastName}} - {{doctor.specialization}}
+                {{doctor.firstName}} {{doctor.lastName}} -
+                {{doctor.specialization}} ({{doctor.user?.email}})
                 <button (click)="deleteDoctor(doctor.id)">Obriši</button>
             </li>
         </ul>
@@ -18,7 +19,7 @@
         <h3>Lista Pacijenata</h3>
         <ul>
             <li *ngFor="let patient of patients">
-                {{patient.firstName}}{{patient.lastName}}
+                {{patient.firstName}} {{patient.lastName}} ({{patient.user?.email}})
                 <button (click)="deletePatient(patient.id)">Obrisi</button>
             </li>
         </ul>
@@ -27,9 +28,8 @@
         <h3>Lista Medicinskih sestara</h3>
         <ul>
             <li *ngFor="let nurse of nurses">
-                {{nurse.firstName}} {{nurse.lastName}}
+                {{nurse.firstName}} {{nurse.lastName}} ({{nurse.user?.email}})
                 <button (click)="deleteNurse(nurse.id)">Obrisi</button>
-
             </li>
         </ul>
     </div>

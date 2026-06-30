@@ -56,18 +56,21 @@ export class AdminDashboard implements OnInit {
     });
   }
   deleteDoctor(id: number) {
+    if (!confirm('Da li ste sigurni da želite da obrišete ovog pacijenta?')) return;
     this.doctorsService.delete(id).subscribe({
       next: () => this.ngOnInit(),
       error: (err) => console.error(err)
     });
   }
   deletePatient(id: number) {
+    if (!confirm('Da li ste sigurni da želite da obrišete ovog pacijenta?')) return;
     this.patientsService.delete(id).subscribe({
       next: () => this.ngOnInit(),
       error: (err) => console.error(err)
     });
   }
   deleteNurse(id: number) {
+    if (!confirm('Da li ste sigurni da želite da obrišete ovog pacijenta?')) return;
     this.nursesService.delete(id).subscribe({
       next: () => this.ngOnInit(),
       error: (err) => console.error(err)
