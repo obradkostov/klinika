@@ -10,4 +10,7 @@ export class NursesService{
     async create(data:{firstName:string,lastName:string,userId:number}){
         return this.prisma.nurse.create({data});
     }
+    async remove(id:number){
+        return this.prisma.nurse.delete({where:{id}});
+    }
 }

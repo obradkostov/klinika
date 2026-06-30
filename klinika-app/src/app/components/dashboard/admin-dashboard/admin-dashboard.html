@@ -28,6 +28,8 @@
         <ul>
             <li *ngFor="let nurse of nurses">
                 {{nurse.firstName}} {{nurse.lastName}}
+                <button (click)="deleteNurse(nurse.id)">Obrisi</button>
+
             </li>
         </ul>
     </div>
