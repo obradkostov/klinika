@@ -1,25 +1,34 @@
-<div>
-    <h2>Admin Dashboard</h2>
-    <button (click)="logout()">Odjavi se</button>
+<div class="admin-dashboard">
+    <div class="header">
+        <h2>Admin Dashboard</h2>
+        <button (click)="logout()">Odjavi se</button>
+    </div>
     <a routerLink="/appointments">Termini</a>
-    <h3>Lista Doktora</h3>
-    <ul>
-        <li *ngFor="let doctor of doctors">
-            {{doctor.firstName}}{{doctor.lastName}}-{{doctor.specialization}}
-            <button (click)="deleteDoctor(doctor.id)">Obrisi</button>
-        </li>
-    </ul>
-    <h3>Lista Pacijenata</h3>
-    <ul>
-        <li *ngFor="let patient of patients">
-            {{patient.firstName}}{{patient.lastName}}
-            <button (click)="deletePatient(patient.id)">Obrisi</button>
-        </li>
-    </ul>
-    <h3>Lista Medicinskih sestara</h3>
-    <ul>
-        <li *ngFor="let nurse of nurses">
-            {{nurse.firstName}} {{nurse.lastName}}
-        </li>
-    </ul>
+    <div class="section">
+        <h3>Lista Doktora</h3>
+        <ul>
+            <li *ngFor="let doctor of doctors">
+                {{doctor.firstName}} {{doctor.lastName}} - {{doctor.specialization}}
+                <button (click)="deleteDoctor(doctor.id)">Obriši</button>
+            </li>
+        </ul>
+    </div>
+    <div class="section">
+
+        <h3>Lista Pacijenata</h3>
+        <ul>
+            <li *ngFor="let patient of patients">
+                {{patient.firstName}}{{patient.lastName}}
+                <button (click)="deletePatient(patient.id)">Obrisi</button>
+            </li>
+        </ul>
+    </div>
+    <div class="section">
+        <h3>Lista Medicinskih sestara</h3>
+        <ul>
+            <li *ngFor="let nurse of nurses">
+                {{nurse.firstName}} {{nurse.lastName}}
+            </li>
+        </ul>
+    </div>
 </div>

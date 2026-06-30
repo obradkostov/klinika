@@ -11,4 +11,5 @@ export class Nurses{
     getAll():Observable<any>{
         return this.http.get(this.apiUrl);
     }
+    
 }
