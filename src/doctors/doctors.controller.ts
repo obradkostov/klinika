@@ -20,8 +20,8 @@ export class DoctorsController{
     update(@Param('id')id:string,@Body() body:any){
         return this.doctorsService.update(+id,body);
     }    
-    @Delete('id')
-    remove(@Param('id')id:number){
-        this.doctorsService.remove(id);
+    @Delete(':id')
+    remove(@Param('id')id:string){
+        this.doctorsService.remove(+id);
     }
 }

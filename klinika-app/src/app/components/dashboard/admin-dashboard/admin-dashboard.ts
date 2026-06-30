@@ -55,7 +55,18 @@ export class AdminDashboard implements OnInit {
       }
     });
   }
-
+  deleteDoctor(id: number) {
+    this.doctorsService.delete(id).subscribe({
+      next: () => this.ngOnInit(),
+      error: (err) => console.error(err)
+    });
+  }
+  deletePatient(id: number) {
+    this.patientsService.delete(id).subscribe({
+      next: () => this.ngOnInit(),
+      error: (err) => console.error(err)
+    });
+  }
   logout() {
     this.authService.logOut();
     this.router.navigate(['/login']);
