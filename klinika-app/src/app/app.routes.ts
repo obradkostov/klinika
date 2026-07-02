@@ -5,6 +5,7 @@ import { AdminDashboard } from './components/dashboard/admin-dashboard/admin-das
 import { DoctorDashboard } from './components/dashboard/doctor-dashboard/doctor-dashboard';
 import { PatientDashboard } from './components/dashboard/patient-dashboard/patient-dashboard';
 import { AppointmentList } from './components/appointments/appointment-list/appointment-list';
+import { NurseDashboard } from './components/dashboard/nurse-dashboard/nurse-dashboard';
 
 export const routes: Routes = [
     {path:'',redirectTo:'login',pathMatch:'full'},
@@ -13,5 +14,6 @@ export const routes: Routes = [
     {path:'admin-dashboard',component:AdminDashboard},
     {path:'doctor-dashboard',component:DoctorDashboard},
     {path:'patient-dashboard',component:PatientDashboard},
-    {path:'appointments',component:AppointmentList}
+    {path:'appointments',component:AppointmentList},
+    {path:'nurse-dashboard',component:NurseDashboard}
 ];
