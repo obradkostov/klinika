@@ -20,7 +20,7 @@
             <input [(ngModel)]="newDoctorFirstName" name="newDoctorFirstName" placeholder="Ime" />
             <input [(ngModel)]="newDoctorLastName" name="newDoctorLastName" placeholder="Prezime" />
             <input [(ngModel)]="newDoctorSpecialization" name="newDoctorSpecialization" placeholder="Specijalizacija" />
-            <button (click)="createDoctor()">Dodaj doktora</button>
+            <button class="form-btn" (click)="createDoctor()">Dodaj doktora</button>
         </div>
     </div>
     <div class="section">
@@ -47,7 +47,7 @@
             <input [(ngModel)]="newNursePassword" name="newNursePassword" type="password" placeholder="Lozinka" />
             <input [(ngModel)]="newNurseFirstName" name="newNurseFirstName" placeholder="Ime" />
             <input [(ngModel)]="newNurseLastName" name="newNurseLastName" placeholder="Prezime" />
-            <button (click)="createNurse()">Dodaj medicinsku sestru</button>
+            <button class="form-btn" (click)="createNurse()">Dodaj medicinsku sestru</button>
         </div>
     </div>
 </div>

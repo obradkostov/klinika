@@ -30,14 +30,14 @@ h3 {
 }
 
 button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 10px;
-  font-size: 14px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
 }
 
 button:hover {
@@ -62,14 +62,14 @@ ul {
 }
 
 li {
-  background: #f4f6f7;
-  padding: 12px 15px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
+    background: #f4f6f7;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
 }
 
 .section {
@@ -82,4 +82,33 @@ li {
 .section h3 {
     margin-top: 0;
     border-bottom: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.form input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width:100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 5px;
+}
+
+h4 {
+    color: #34495e;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+.form-btn{
+    width:100%;
+    margin-top:5px;
+    margin-left:0;
 }
