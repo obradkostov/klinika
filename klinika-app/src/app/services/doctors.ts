@@ -14,4 +14,7 @@ export class Doctors {
   delete(id:number):Observable<any>{
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+  create(data:{firstName:string,lastName:string,specialization:string,userId:number}):Observable<any>{
+    return this.http.post(this.apiUrl,data);
+  }
 }

@@ -5,10 +5,11 @@ import { Doctors } from '../../../services/doctors';
 import { CommonModule } from '@angular/common';
 import { Patients } from '../../../services/patients';
 import { Nurses } from '../../../services/nurses';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink,FormsModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
@@ -16,6 +17,16 @@ export class AdminDashboard implements OnInit {
   doctors: any[] = [];
   patients: any[] = [];
   nurses: any[] = [];
+  newDoctorEmail = '';
+  newDoctorPassword = '';
+  newDoctorFirstName = '';
+  newDoctorLastName = '';
+  newDoctorSpecialization = '';
+
+  newNurseEmail = '';
+  newNursePassword = '';
+  newNurseFirstName = '';
+  newNurseLastName = '';
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -55,6 +66,28 @@ export class AdminDashboard implements OnInit {
       }
     });
   }
+  createDoctor() {
+    this.authService.register(this.newDoctorEmail, this.newDoctorPassword, 'DOCTOR').subscribe({
+      next: (user) => {
+        this.doctorsService.create({
+          firstName: this.newDoctorFirstName,
+          lastName:this.newDoctorLastName,
+          specialization: this.newDoctorSpecialization,
+          userId: user.id
+        }).subscribe({
+          next: () => {
+            this.newDoctorEmail = '',
+              this.newDoctorFirstName = '',
+              this.newDoctorLastName = '',
+              this.newDoctorPassword = '',
+              this.newDoctorSpecialization = ''
+            this.ngOnInit();
+          }
+        });
+      },
+      error: (err) => console.error(err)
+    });
+  }
   deleteDoctor(id: number) {
     if (!confirm('Da li ste sigurni da želite da obrišete ovog pacijenta?')) return;
     this.doctorsService.delete(id).subscribe({
@@ -66,6 +99,26 @@ export class AdminDashboard implements OnInit {
     if (!confirm('Da li ste sigurni da želite da obrišete ovog pacijenta?')) return;
     this.patientsService.delete(id).subscribe({
       next: () => this.ngOnInit(),
+      error: (err) => console.error(err)
+    });
+  }
+  createNurse() {
+    this.authService.register(this.newNurseEmail, this.newNursePassword, 'NURSE').subscribe({
+      next: (user) => {
+        this.nursesService.create({
+          firstName: this.newNurseFirstName,
+          lastName:this.newNurseLastName,
+          userId: user.id
+        }).subscribe({
+          next: () => {
+            this.newNurseEmail = '',
+              this.newNurseFirstName = '',
+              this.newNurseLastName = '',
+              this.newNursePassword = '',
+            this.ngOnInit();
+          }
+        });
+      },
       error: (err) => console.error(err)
     });
   }
