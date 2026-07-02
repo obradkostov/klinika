@@ -1,20 +1,30 @@
-<div>
-<h2>Doctor Dashboard</h2>
-<h2>{{ userName }}</h2>
-<button (click)="logout()">Odjavi se</button>
-<a routerLink="/appointments">Zakaži/Vidi sve termine</a>
-<h3>Moji termini</h3>
-<ul>
-    <li *ngFor="let a of appointments">
-        {{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - {{a.patient?.firstName}} {{a.patient?.lastName}}
-        <button *ngIf="a.status==='PENDING'" (click)="updateStatus(a.id,'CONFIRMED')">Potvrdi</button>
-        <button *ngIf="a.status==='PENDING'" (click)="updateStatus(a.id,'CANCELLED')">Otkazi</button>   
-        <button *ngIf="a.status==='CONFIRMED'" (click)="openDiagnosisForm(a.id)">Upisi nalaz</button>
-        <div *ngIf="selectedAppointmentId===a.id">
-            <input [(ngModel)]="diagnosisDescription" name="description" placeholder="Opis dijagnoze">
-            <input [(ngModel)]="diagnosisPrescription" name="prescription" placeholder="Recept (opciono)">
-            <button (click)="submitDiagnosis()">Sacuvaj nalaz</button>
+<div class="doctor-container">
+    <div class="header">
+        <div>
+            <h2>Doctor Dashboard</h2>
+            <p>{{ userName }}</p>
         </div>
-    </li>
-</ul>
+        <button (click)="logout()">Odjavi se</button>
+    </div>
+    <a routerLink="/appointments">Zakaži/Vidi sve termine</a>
+
+    <div class="section">
+        <h3>Moji termini</h3>
+        <ul>
+            <li *ngFor="let a of appointments">
+                <span>{{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - {{a.patient?.firstName}}
+                    {{a.patient?.lastName}}</span>
+                <div class="actions">
+                    <button *ngIf="a.status==='PENDING'" (click)="updateStatus(a.id,'CONFIRMED')">Potvrdi</button>
+                    <button *ngIf="a.status==='PENDING'" (click)="updateStatus(a.id,'CANCELLED')">Otkaži</button>
+                    <button *ngIf="a.status==='CONFIRMED'" (click)="openDiagnosisForm(a.id)">Upiši nalaz</button>
+                </div>
+                <div class="diagnosis-form" *ngIf="selectedAppointmentId===a.id">
+                    <input [(ngModel)]="diagnosisDescription" name="description" placeholder="Opis dijagnoze">
+                    <input [(ngModel)]="diagnosisPrescription" name="prescription" placeholder="Recept (opciono)">
+                    <button (click)="submitDiagnosis()">Sačuvaj nalaz</button>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
