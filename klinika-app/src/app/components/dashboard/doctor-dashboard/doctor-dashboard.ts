@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Appointments } from '../../../services/appointments';
 import { FormsModule } from '@angular/forms';
 import { Diagnosis } from '../../../services/diagnosis';
+import { Doctors } from '../../../services/doctors';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -19,15 +20,26 @@ export class DoctorDashboard implements OnInit {
     private router: Router,
     private appointmentsService: Appointments,
     private diagnosisService: Diagnosis,
+    private doctorService:Doctors,
     private cdr: ChangeDetectorRef
+  
   ) { }
   userName = '';
   selectedAppointmentId: number | null = null;
   diagnosisDescription = '';
   diagnosisPrescription = '';
+  fullName='';
   ngOnInit() {
     const user = this.authService.getUserFromToken();
     this.userName = user?.email || '';
+    this.doctorService.getByUserId(user.sub).subscribe({
+      next:(doctor)=>{
+        this.fullName=doctor.firstName+' '+doctor.lastName;
+        this.cdr.markForCheck();
+      },
+      error:(err)=>console.error(err)
+      
+    });
     if (user) {
       this.appointmentsService.getAll().subscribe({
         next: (data) => {

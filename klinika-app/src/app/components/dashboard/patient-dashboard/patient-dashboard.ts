@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { Appointments } from '../../../services/appointments';
+import { Patients } from '../../../services/patients';
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -13,15 +14,24 @@ import { Appointments } from '../../../services/appointments';
 export class PatientDashboard implements OnInit {
   appointments: any[] = [];
   userName = '';
+  fullName='';
   constructor(
     private authService: AuthService, 
     private router: Router,
     private appointmentsService:Appointments,
+    private patientService:Patients,
     private cdr:ChangeDetectorRef
   ) { }
   ngOnInit() {
     const user=this.authService.getUserFromToken();
     this.userName=user?.email||'';
+    this.patientService.getByUserId(user.sub).subscribe({
+      next:(patient)=>{
+        this.fullName=patient.firstName+' '+patient.lastName;
+        this.cdr.markForCheck();
+      },
+      error:(err)=>console.error(err)
+    })
     if(user){
       this.appointmentsService.getAll().subscribe({
         next:(data)=>{

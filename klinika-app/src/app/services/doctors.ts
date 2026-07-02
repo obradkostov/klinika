@@ -17,4 +17,7 @@ export class Doctors {
   create(data:{firstName:string,lastName:string,specialization:string,userId:number}):Observable<any>{
     return this.http.post(this.apiUrl,data);
   }
+  getByUserId(userId:number):Observable<any>{
+    return this.http.get(`${this.apiUrl}/user/${userId}`);
+  }
 }

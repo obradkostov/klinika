@@ -28,4 +28,7 @@ export class PatientsService {
     async remove(id: number) {
         return this.prisma.patient.delete({ where: { id } });
     }
+    async findByUserId(userId: number) {
+        return this.prisma.patient.findFirst({ where: { userId } });
+    }
 }

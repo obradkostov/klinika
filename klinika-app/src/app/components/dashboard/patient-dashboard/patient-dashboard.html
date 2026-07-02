@@ -1,17 +1,25 @@
-<div>
-  <h2>Patient Dashboard</h2>
-  <h2>{{userName}}</h2>
-  <button (click)="logout()">Odjavi se</button>
+<div class="patient-container">
+  <div class="header">
+    <div>
+      <h2>Patient Dashboard</h2>
+      <p>{{ fullName }}</p>
+      <p>{{ userName }}</p>
+    </div>
+    <button (click)="logout()">Odjavi se</button>
+  </div>
   <a routerLink="/appointments">Zakaži/Vidi sve termine</a>
-  <h3>Moji termini</h3>
-  <ul>
-    <li *ngFor="let a of appointments">
-      {{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - Dr. {{a.doctor?.firstName}}
-      {{a.doctor?.lastName}}
-      <div *ngIf="a.diagnosis">
-        <strong>Nalaz:</strong> {{a.diagnosis.description}}
-        <span *ngIf="a.diagnosis.prescription"> | Recept: {{a.diagnosis.prescription}}</span>
-      </div>
-    </li>
-  </ul>
+
+  <div class="section">
+    <h3>Moji termini</h3>
+    <ul>
+      <li *ngFor="let a of appointments">
+        <span>{{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - Dr. {{a.doctor?.firstName}}
+          {{a.doctor?.lastName}}</span>
+        <div class="diagnosis" *ngIf="a.diagnosis">
+          <strong>Nalaz:</strong> {{a.diagnosis.description}}
+          <span *ngIf="a.diagnosis.prescription"> | Recept: {{a.diagnosis.prescription}}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -12,6 +12,10 @@ export class PatientsController{
     findOne(@Param('id')id:string){
         return this.patientsService.findOne(+id);
     }   
+    @Get('user/:userId')
+    findByUserId(@Param('userId')userId:string){
+        return this.patientsService.findByUserId(+userId);
+    }
     @Post()
     create(@Body()body:{firstName:string,lastName:string,dateOfBirth:string,userId:number}){
         return this.patientsService.create(body);

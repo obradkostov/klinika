@@ -12,6 +12,10 @@ export class DoctorsController{
     findOne(@Param('id')id:string){
         return this.doctorsService.findOne(+id);
     }   
+    @Get('user/:userId')
+    findByUserId(@Param('userId') userId:string){
+        return this.doctorsService.findByUserId(+userId);
+    }
     @Post()
     create(@Body()body:{firstName:string,lastName:string,specialization:string,userId:number}){
         return this.doctorsService.create(body);
@@ -24,4 +28,5 @@ export class DoctorsController{
     remove(@Param('id')id:string){
         this.doctorsService.remove(+id);
     }
+
 }
