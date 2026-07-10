@@ -14,12 +14,12 @@ import { Appointments } from '../../../services/appointments';
 export class NurseDashboard implements OnInit {
   fullName = '';
   userName = '';
-  appointments:any[]=[];
+  appointments: any[] = [];
   constructor(
     private authService: AuthService,
     private router: Router,
     private nursesService: Nurses,
-    private appointmentService:Appointments,
+    private appointmentService: Appointments,
     private cdr: ChangeDetectorRef
   ) { }
   ngOnInit() {
@@ -37,14 +37,20 @@ export class NurseDashboard implements OnInit {
 
       })
       this.appointmentService.getAll().subscribe({
-        next:(data)=>{
-          this.appointments=data,
-          this.cdr.markForCheck();
+        next: (data) => {
+          this.appointments = data,
+            this.cdr.markForCheck();
         },
-        error:(err)=>console.error(err)
-        
+        error: (err) => console.error(err)
+
       })
     }
+  }
+  confirmArrival(appointmentId: number) {
+    this.appointmentService.updateStatus(appointmentId, 'CONFIRMED').subscribe({
+      next: () => this.ngOnInit(),
+      error: (err: any) => console.error(err)
+    });
   }
   logout() {
     this.authService.logOut();
