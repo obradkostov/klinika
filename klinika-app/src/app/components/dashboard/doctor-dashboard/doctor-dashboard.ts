@@ -20,25 +20,25 @@ export class DoctorDashboard implements OnInit {
     private router: Router,
     private appointmentsService: Appointments,
     private diagnosisService: Diagnosis,
-    private doctorService:Doctors,
+    private doctorService: Doctors,
     private cdr: ChangeDetectorRef
-  
+
   ) { }
   userName = '';
   selectedAppointmentId: number | null = null;
   diagnosisDescription = '';
   diagnosisPrescription = '';
-  fullName='';
+  fullName = '';
   ngOnInit() {
     const user = this.authService.getUserFromToken();
     this.userName = user?.email || '';
     this.doctorService.getByUserId(user.sub).subscribe({
-      next:(doctor)=>{
-        this.fullName=doctor.firstName+' '+doctor.lastName;
+      next: (doctor) => {
+        this.fullName = doctor.firstName + ' ' + doctor.lastName;
         this.cdr.markForCheck();
       },
-      error:(err)=>console.error(err)
-      
+      error: (err) => console.error(err)
+
     });
     if (user) {
       this.appointmentsService.getAll().subscribe({
@@ -63,18 +63,24 @@ export class DoctorDashboard implements OnInit {
     this.diagnosisDescription = '';
     this.diagnosisPrescription = '';
   }
-  submitDiagnosis(){
-    if(!this.selectedAppointmentId || !this.diagnosisDescription) return;
+  submitDiagnosis() {
+    if (!this.selectedAppointmentId || !this.diagnosisDescription) return;
     this.diagnosisService.create({
-      description:this.diagnosisDescription,
-      prescription:this.diagnosisPrescription,
-      appointmentId:this.selectedAppointmentId!
+      description: this.diagnosisDescription,
+      prescription: this.diagnosisPrescription,
+      appointmentId: this.selectedAppointmentId!
     }).subscribe({
-      next:()=>{
-        this.selectedAppointmentId=null;
-        this.ngOnInit();
+      next: () => {
+        this.appointmentsService.updateStatus(this.selectedAppointmentId!, 'COMPLETED').subscribe({
+          next: () => {
+            this.selectedAppointmentId = null;
+            this.ngOnInit();
+          },
+          error:(err)=>console.error(err)
+          
+        })
       },
-      error:(err)=>console.error(err)
+      error: (err) => console.error(err)
     })
   }
   logout() {

@@ -9,7 +9,11 @@
   </div>
 
   <div class="section">
-    <h3>Dobrodošli u sistem klinike</h3>
-    <p>Kao medicinska sestra imate pristup sistemu klinike. Obratite se administratoru za dodatne informacije.</p>
+    <h3>Raspored termina</h3>
+    <ul>
+      <li *ngFor="let a of appointments">
+        {{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - Dr. {{a.doctor.firstName}} {{a.doctor.lastName}} - {{a.patient.lastName}} 
+      </li>
+    </ul>
   </div>
 </div>

@@ -8,6 +8,10 @@ export class NursesController{
     findAll(){
         return this.nursesService.findAll();
     }
+    @Get('user/:userId')
+    findByUserId(@Param('userId')userId:string){
+        return this.nursesService.findByUserId(+userId);
+    }
     @Post()
     create(@Body() body:{firstName:string,lastName:string,userId:number}){
         return this.nursesService.create(body);
