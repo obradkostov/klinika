@@ -1,8 +1,11 @@
 <div class="register-container">
     <h2>Registracija</h2>
     <div *ngIf="error">{{error}}</div>
-    <input [(ngModel)]="email" type="email" placeholder="Email">
-    <input [(ngModel)]="password" type="password" placeholder="Lozinka">
+    <input [(ngModel)]="firstName" name="firstName" type="text" placeholder="Ime">
+    <input [(ngModel)]="lastName" name="lastName" type="text" placeholder="Prezime">
+    <input [(ngModel)]="email" name="email" type="email" placeholder="Email">
+    <input [(ngModel)]="password" name="password" type="password" placeholder="Lozinka">
+    <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" placeholder="Potvrdi lozinku">
     <button (click)="register()">Registruj se</button>
     <a routerLink="/login">Vec imate nalog? Prijavite se</a>
 </div>

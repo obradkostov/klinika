@@ -11,18 +11,21 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './register.css',
 })
 export class RegisterComponent {
-  email='';
-  password='';
-  role='PATIENT';
-  error='';
-  constructor(private authService:AuthService,private router:Router){}
-  register(){
-    this.authService.register(this.email,this.password,this.role).subscribe({
-      next:()=>{
+  firstName = '';
+  lastName = '';
+  email = '';
+  password = '';
+  confirmPassword = '';
+  role = 'PATIENT';
+  error = '';
+  constructor(private authService: AuthService, private router: Router) { }
+  register() {
+    this.authService.register(this.email, this.password, this.role).subscribe({
+      next: () => {
         this.router.navigate(['/login']);
       },
-      error:()=>{
-        this.error="Greska pri registraciji";
+      error: () => {
+        this.error = "Greska pri registraciji";
       }
     });
   }
