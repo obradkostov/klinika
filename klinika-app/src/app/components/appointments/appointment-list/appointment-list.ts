@@ -20,20 +20,30 @@ export class AppointmentList implements OnInit {
   reason = '';
   doctorId: number = 0;
   patientId: number = 0;
-  doctorList:any[]=[];
-  patientsList:any[]=[];
+  doctorList: any[] = [];
+  patientsList: any[] = [];
+  currentPatientId: number = 0;
   constructor(
     private appointmentService: Appointments,
     private cdr: ChangeDetectorRef,
-    private doctorService:Doctors,
-    private patientsService:Patients,
-    private router:Router,
-    private authService:AuthService
+    private doctorService: Doctors,
+    private patientsService: Patients,
+    private router: Router,
+    private authService: AuthService
   ) { }
   ngOnInit() {
     this.loadAppointments();
-    this.doctorService.getAll().subscribe(data=>this.doctorList=data);
-    this.patientsService.getAll().subscribe(data=>this.patientsList=data);
+    this.doctorService.getAll().subscribe(data => this.doctorList = data);
+    this.patientsService.getAll().subscribe(data => this.patientsList = data);
+    const user=this.authService.getUserFromToken();
+    if(user.role==='PATIENT'){
+      this.patientsService.getByUserId(user.sub).subscribe({
+        next:(patient)=>{
+          console.log('patient:',patient);
+          if(patient) this.currentPatientId=patient.id;
+        }
+      });
+    }
   }
   loadAppointments() {
     this.appointmentService.getAll().subscribe({
@@ -46,13 +56,12 @@ export class AppointmentList implements OnInit {
   }
   createAppointment() {
     if (!this.dateTime || !this.reason) return;
-
+    const user=this.authService.getUserFromToken();
     this.appointmentService.create({
-
       dateTime: this.dateTime + ':00.000Z',
       reason: this.reason,
       doctorId: +this.doctorId,
-      patientId: +this.patientId
+      patientId: user.role==='PATIENT'?this.currentPatientId: +this.patientId
     }).subscribe({
       next: () => {
         this.loadAppointments();
@@ -64,11 +73,10 @@ export class AppointmentList implements OnInit {
       error: (err) => console.error(err)
     });
   }
-  goBack(){
-    const user=this.authService.getUserFromToken();
-    if(user?.role==='ADMIN') this.router.navigate(['/admin-dashboard']);
-    else if(user?.role==='DOCTOR') this.router.navigate(['/doctor-dashboard']);
-    else if(user?.role==='PATIENT') this.router.navigate(['/patient-dashboard']);
+  goBack() {
+    const user = this.authService.getUserFromToken();
+    if (user?.role === 'ADMIN') this.router.navigate(['/admin-dashboard']);
+    else if (user?.role === 'DOCTOR') this.router.navigate(['/doctor-dashboard']);
+    else if (user?.role === 'PATIENT') this.router.navigate(['/patient-dashboard']);
   }
 }
- 
