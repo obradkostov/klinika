@@ -52,8 +52,12 @@ export class AppointmentList implements OnInit {
       next: (data) => {
         const user = this.authService.getUserFromToken();
         if (user?.role === 'PATIENT') {
-          this.appointments = [...data.filter((a: any) => a.patient?.userId === user.sub)];
-        } else {
+          this.appointments = [...data.filter((a: any) => a.userId === user.sub)];
+        }
+        else if (user.role === 'DOCTOR') {
+          this.appointments = [...data.filter((a: any) => a.doctor.userId === user.sub)];
+        }
+        else {
           this.appointments = [...data];
         }
         this.cdr.markForCheck();
