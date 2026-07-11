@@ -5,7 +5,8 @@
     </div>
     <h3>Zakazani termini</h3>
     <div class="form">
-        <input [(ngModel)]="dateTime" name="dateTime" type="datetime-local" placeholder="Datum i vreme">
+        <input [(ngModel)]="dateTime" name="dateTime" type="datetime-local" [min]="minDateTime"
+            placeholder="Datum i vreme">
         <input [(ngModel)]="reason" name="reason" type="text" placeholder="Razlog posete">
         <select [(ngModel)]="doctorId" name="doctorId">
             <option [value]="0" disabled>Izaberi doktora</option>

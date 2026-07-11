@@ -23,6 +23,8 @@ export class AppointmentList implements OnInit {
   doctorList: any[] = [];
   patientsList: any[] = [];
   currentPatientId: number = 0;
+  minDateTime = new Date().toISOString().slice(0, 16);
+  userRole = '';
   constructor(
     private appointmentService: Appointments,
     private cdr: ChangeDetectorRef,
@@ -36,6 +38,7 @@ export class AppointmentList implements OnInit {
     this.doctorService.getAll().subscribe(data => this.doctorList = data);
     this.patientsService.getAll().subscribe(data => this.patientsList = data);
     const user = this.authService.getUserFromToken();
+    this.userRole = user.role || '';
     if (user.role === 'PATIENT') {
       this.patientsService.getByUserId(user.sub).subscribe({
         next: (patient) => {
