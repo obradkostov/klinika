@@ -35,12 +35,11 @@ export class AppointmentList implements OnInit {
     this.loadAppointments();
     this.doctorService.getAll().subscribe(data => this.doctorList = data);
     this.patientsService.getAll().subscribe(data => this.patientsList = data);
-    const user=this.authService.getUserFromToken();
-    if(user.role==='PATIENT'){
+    const user = this.authService.getUserFromToken();
+    if (user.role === 'PATIENT') {
       this.patientsService.getByUserId(user.sub).subscribe({
-        next:(patient)=>{
-          console.log('patient:',patient);
-          if(patient) this.currentPatientId=patient.id;
+        next: (patient) => {
+          if (patient) this.currentPatientId = patient.id;
         }
       });
     }
@@ -48,7 +47,12 @@ export class AppointmentList implements OnInit {
   loadAppointments() {
     this.appointmentService.getAll().subscribe({
       next: (data) => {
-        this.appointments = [...data];
+        const user = this.authService.getUserFromToken();
+        if (user?.role === 'PATIENT') {
+          this.appointments = [...data.filter((a: any) => a.patient?.userId === user.sub)];
+        } else {
+          this.appointments = [...data];
+        }
         this.cdr.markForCheck();
       },
       error: (err) => console.error(err)
@@ -56,12 +60,12 @@ export class AppointmentList implements OnInit {
   }
   createAppointment() {
     if (!this.dateTime || !this.reason) return;
-    const user=this.authService.getUserFromToken();
+    const user = this.authService.getUserFromToken();
     this.appointmentService.create({
       dateTime: this.dateTime + ':00.000Z',
       reason: this.reason,
       doctorId: +this.doctorId,
-      patientId: user.role==='PATIENT'?this.currentPatientId: +this.patientId
+      patientId: user.role === 'PATIENT' ? this.currentPatientId : +this.patientId
     }).subscribe({
       next: () => {
         this.loadAppointments();
