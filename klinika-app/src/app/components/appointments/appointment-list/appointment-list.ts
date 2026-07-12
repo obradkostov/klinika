@@ -23,6 +23,7 @@ export class AppointmentList implements OnInit {
   doctorList: any[] = [];
   patientsList: any[] = [];
   currentPatientId: number = 0;
+  currentDoctorId: number = 0;
   minDateTime = new Date().toISOString().slice(0, 16);
   userRole = '';
   constructor(
@@ -46,6 +47,15 @@ export class AppointmentList implements OnInit {
         }
       });
     }
+    if (user.role = 'DOCTOR') {
+      this.doctorService.getByUserId(user.sub).subscribe({
+        next: (doctor) => {
+          if (doctor) this.currentDoctorId = this.doctorId;
+        },
+        error: (err) => console.error(err)
+
+      });
+    }
   }
   loadAppointments() {
     this.appointmentService.getAll().subscribe({
@@ -67,11 +77,15 @@ export class AppointmentList implements OnInit {
   }
   createAppointment() {
     if (!this.dateTime || !this.reason) return;
+    if (new Date(this.dateTime) < new Date()) {
+      alert('Ne možete zakazati termin u prošlosti!');
+      return;
+    }
     const user = this.authService.getUserFromToken();
     this.appointmentService.create({
       dateTime: this.dateTime + ':00.000Z',
       reason: this.reason,
-      doctorId: +this.doctorId,
+      doctorId: user.role === 'DOCTOR' ? this.currentDoctorId : +this.doctorId,
       patientId: user.role === 'PATIENT' ? this.currentPatientId : +this.patientId
     }).subscribe({
       next: () => {

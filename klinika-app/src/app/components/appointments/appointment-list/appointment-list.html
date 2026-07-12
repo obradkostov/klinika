@@ -8,11 +8,11 @@
         <input [(ngModel)]="dateTime" name="dateTime" type="datetime-local" [min]="minDateTime"
             placeholder="Datum i vreme">
         <input [(ngModel)]="reason" name="reason" type="text" placeholder="Razlog posete">
-        <select [(ngModel)]="doctorId" name="doctorId">
+        <select *ngIf="userRole !== 'DOCTOR'" [(ngModel)]="doctorId" name="doctorId">
             <option [value]="0" disabled>Izaberi doktora</option>
             <option *ngFor="let d of doctorList" [value]="d.id">{{ d.firstName }} {{ d.lastName }}</option>
         </select>
-        <select *ngIf="currentPatientId === 0" [(ngModel)]="patientId" name="patientId">
+        <select *ngIf="currentPatientId === 0 && userRole !== 'PATIENT'" [(ngModel)]="patientId" name="patientId">
             <option [value]="0" disabled>Izaberi pacijenta</option>
             <option *ngFor="let p of patientsList" [value]="p.id">{{ p.firstName }} {{ p.lastName }}</option>
         </select>
