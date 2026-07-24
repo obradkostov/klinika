@@ -89,7 +89,7 @@ export class AdminDashboard implements OnInit {
     });
   }
   deleteDoctor(id: number) {
-    if (!confirm('Da li ste sigurni da želite da obrišete ovog pacijenta?')) return;
+    if (!confirm('Da li ste sigurni da želite da obrišete ovog doktora?')) return;
     this.doctorsService.delete(id).subscribe({
       next: () => this.ngOnInit(),
       error: (err) => console.error(err)
@@ -123,7 +123,7 @@ export class AdminDashboard implements OnInit {
     });
   }
   deleteNurse(id: number) {
-    if (!confirm('Da li ste sigurni da želite da obrišete ovog pacijenta?')) return;
+    if (!confirm('Da li ste sigurni da želite da obrišete ovu medicinsku sestru?')) return;
     this.nursesService.delete(id).subscribe({
       next: () => this.ngOnInit(),
       error: (err) => console.error(err)

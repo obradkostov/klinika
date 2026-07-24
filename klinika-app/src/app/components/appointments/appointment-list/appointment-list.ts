@@ -47,13 +47,12 @@ export class AppointmentList implements OnInit {
         }
       });
     }
-    if (user.role = 'DOCTOR') {
+    if (user.role === 'DOCTOR') {
       this.doctorService.getByUserId(user.sub).subscribe({
-        next: (doctor) => {
-          if (doctor) this.currentDoctorId = this.doctorId;
+        next: (doctor: any) => {
+          if (doctor) this.currentDoctorId = doctor.id;
         },
         error: (err) => console.error(err)
-
       });
     }
   }

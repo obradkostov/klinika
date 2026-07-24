@@ -12,7 +12,7 @@
     <h3>Raspored termina</h3>
     <ul>
       <li *ngFor="let a of appointments">
-        {{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - Dr. {{a.doctor.firstName}} {{a.doctor.lastName}} - {{a.patient.lastName}} <br>
+        {{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - Dr. {{a.doctor.firstName}} {{a.doctor.lastName}} -{{a.patient.firstName}} {{a.patient.lastName}} <br>
       <button *ngIf="a.status==='PENDING'" (click)="confirmArrival(a.id)">Potvrdi dolazak</button>
       </li>
     </ul>

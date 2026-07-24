@@ -12,7 +12,7 @@
             <option [value]="0" disabled>Izaberi doktora</option>
             <option *ngFor="let d of doctorList" [value]="d.id">{{ d.firstName }} {{ d.lastName }}</option>
         </select>
-        <select *ngIf="currentPatientId === 0 && userRole !== 'PATIENT'" [(ngModel)]="patientId" name="patientId">
+        <select *ngIf="currentPatientId === 0" [(ngModel)]="patientId" name="patientId">
             <option [value]="0" disabled>Izaberi pacijenta</option>
             <option *ngFor="let p of patientsList" [value]="p.id">{{ p.firstName }} {{ p.lastName }}</option>
         </select>
