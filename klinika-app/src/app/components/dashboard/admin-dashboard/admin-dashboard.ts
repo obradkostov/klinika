@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule, RouterLink,FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
@@ -27,6 +27,8 @@ export class AdminDashboard implements OnInit {
   newNursePassword = '';
   newNurseFirstName = '';
   newNurseLastName = '';
+
+  searchTerm='';
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -71,7 +73,7 @@ export class AdminDashboard implements OnInit {
       next: (user) => {
         this.doctorsService.create({
           firstName: this.newDoctorFirstName,
-          lastName:this.newDoctorLastName,
+          lastName: this.newDoctorLastName,
           specialization: this.newDoctorSpecialization,
           userId: user.id
         }).subscribe({
@@ -107,7 +109,7 @@ export class AdminDashboard implements OnInit {
       next: (user) => {
         this.nursesService.create({
           firstName: this.newNurseFirstName,
-          lastName:this.newNurseLastName,
+          lastName: this.newNurseLastName,
           userId: user.id
         }).subscribe({
           next: () => {
@@ -115,7 +117,7 @@ export class AdminDashboard implements OnInit {
               this.newNurseFirstName = '',
               this.newNurseLastName = '',
               this.newNursePassword = '',
-            this.ngOnInit();
+              this.ngOnInit();
           }
         });
       },
@@ -128,6 +130,15 @@ export class AdminDashboard implements OnInit {
       next: () => this.ngOnInit(),
       error: (err) => console.error(err)
     });
+  }
+  filterPatients(){
+    if(!this.searchTerm) return this.patients;
+    const term=this.searchTerm.toLowerCase();
+    return this.patients.filter((p)=>
+    p.firstName.toLowerCase().includes(term) ||
+    p.lastName.toLowerCase().includes(term) ||
+    p.user.email.toLowerCase().includes(term)
+    );
   }
   logout() {
     this.authService.logOut();

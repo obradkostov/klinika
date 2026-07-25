@@ -26,8 +26,9 @@
     <div class="section">
 
         <h3>Lista Pacijenata</h3>
+        <input [(ngModel)]="searchTerm" placeholder="Pretrazi pacijente..." name="searchTerm">
         <ul>
-            <li *ngFor="let patient of patients">
+            <li *ngFor="let patient of filterPatients()">
                 {{patient.firstName}} {{patient.lastName}} ({{patient.user?.email}})
                 <button (click)="deletePatient(patient.id)">Obrisi</button>
             </li>
