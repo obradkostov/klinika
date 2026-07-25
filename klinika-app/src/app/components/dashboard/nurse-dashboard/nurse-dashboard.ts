@@ -52,6 +52,14 @@ export class NurseDashboard implements OnInit {
       error: (err: any) => console.error(err)
     });
   }
+  cancelAppointment(appointmentId: number) {
+    if(!confirm("Da li ste sigurni da zelite da otkazete termin?"))return;
+    this.appointmentService.updateStatus(appointmentId,'CANCELLED').subscribe({
+      next:()=>this.ngOnInit(),
+      error:(err)=>console.error(err)
+      
+    })
+  }
   logout() {
     this.authService.logOut();
     this.router.navigate(['/login']);
