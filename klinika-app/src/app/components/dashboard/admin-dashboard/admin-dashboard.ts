@@ -36,6 +36,8 @@ export class AdminDashboard implements OnInit {
   confirmedAppointments = '';
   completedAppointments = '';
   cancelledAppointments = '';
+
+  activeSection = 'stats';
   constructor(
     private authService: AuthService,
     private router: Router,

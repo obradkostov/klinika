@@ -4,7 +4,15 @@
         <button (click)="logout()">Odjavi se</button>
     </div>
     <a routerLink="/appointments">Termini</a>
-    <div class="section">
+
+    <div class="nav-buttons">
+        <button (click)="activeSection = 'stats'">Statistike</button>
+        <button (click)="activeSection = 'doctors'">Doktori</button>
+        <button (click)="activeSection = 'patients'">Pacijenti</button>
+        <button (click)="activeSection = 'nurses'">Sestre</button>
+    </div>
+
+    <div *ngIf="activeSection === 'stats'" class="section">
         <h3>Statistike</h3>
         <p>Ukupno pacijenata: <strong>{{ patients.length }}</strong></p>
         <p>Ukupno doktora: <strong>{{ doctors.length }}</strong></p>
@@ -16,12 +24,11 @@
         <p>Cancelled: <strong>{{ cancelledAppointments }}</strong></p>
     </div>
 
-    <div class="section">
+    <div *ngIf="activeSection === 'doctors'" class="section">
         <h3>Lista Doktora</h3>
         <ul>
             <li *ngFor="let doctor of doctors">
-                {{doctor.firstName}} {{doctor.lastName}} -
-                {{doctor.specialization}} ({{doctor.user?.email}})
+                {{doctor.firstName}} {{doctor.lastName}} - {{doctor.specialization}} ({{doctor.user?.email}})
                 <button (click)="deleteDoctor(doctor.id)">Obriši</button>
             </li>
         </ul>
@@ -35,23 +42,24 @@
             <button class="form-btn" (click)="createDoctor()">Dodaj doktora</button>
         </div>
     </div>
-    <div class="section">
 
+    <div *ngIf="activeSection === 'patients'" class="section">
         <h3>Lista Pacijenata</h3>
-        <input [(ngModel)]="searchTerm" placeholder="Pretrazi pacijente..." name="searchTerm">
+        <input [(ngModel)]="searchTerm" placeholder="Pretraži pacijente..." name="searchTerm">
         <ul>
             <li *ngFor="let patient of filterPatients()">
                 {{patient.firstName}} {{patient.lastName}} ({{patient.user?.email}})
-                <button (click)="deletePatient(patient.id)">Obrisi</button>
+                <button (click)="deletePatient(patient.id)">Obriši</button>
             </li>
         </ul>
     </div>
-    <div class="section">
+
+    <div *ngIf="activeSection === 'nurses'" class="section">
         <h3>Lista Medicinskih sestara</h3>
         <ul>
             <li *ngFor="let nurse of nurses">
                 {{nurse.firstName}} {{nurse.lastName}} ({{nurse.user?.email}})
-                <button (click)="deleteNurse(nurse.id)">Obrisi</button>
+                <button (click)="deleteNurse(nurse.id)">Obriši</button>
             </li>
         </ul>
         <h4>Dodaj novu medicinsku sestru</h4>
