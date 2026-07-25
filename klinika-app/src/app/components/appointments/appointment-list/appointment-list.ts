@@ -26,6 +26,7 @@ export class AppointmentList implements OnInit {
   currentDoctorId: number = 0;
   minDateTime = new Date().toISOString().slice(0, 16);
   userRole = '';
+  filterStatus='';
   constructor(
     private appointmentService: Appointments,
     private cdr: ChangeDetectorRef,
@@ -96,6 +97,10 @@ export class AppointmentList implements OnInit {
       },
       error: (err) => console.error(err)
     });
+  }
+  filterAppointments(){
+    if(!this.filterStatus) return this.appointments;
+    return this.appointments.filter((a)=>a.status===this.filterStatus);
   }
   goBack() {
     const user = this.authService.getUserFromToken();

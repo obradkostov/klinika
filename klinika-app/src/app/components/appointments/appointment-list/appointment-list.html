@@ -18,9 +18,16 @@
         </select>
         <button type="button" (click)="createAppointment()">Zakaži termin</button>
     </div>
+    <select [(ngModel)]="filterStatus" name="filterStatus">
+        <option value="">Svi termini</option>
+        <option value="PENDING">Pending</option>
+        <option value="CONFIRMED">Confirmed</option>
+        <option value="CANCELLED">Cancelled</option>
+        <option value="COMPLETED">Completed</option>
+    </select>
     <h3>Lista termina</h3>
     <ul>
-        <li *ngFor="let a of appointments">
+        <li *ngFor="let a of filterAppointments()">
             {{ a.dateTime | date:'dd.MM.yyyy HH:mm' }} - {{ a.reason }} - {{ a.status }} - Dr. {{ a.doctor?.firstName }}
             {{ a.doctor?.lastName }} - {{ a.patient?.firstName }} {{ a.patient?.lastName }}
         </li>
