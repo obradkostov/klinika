@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Patients } from '../../../services/patients';
 import { Nurses } from '../../../services/nurses';
 import { FormsModule } from '@angular/forms';
+import { Appointments } from '../../../services/appointments';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -28,14 +29,21 @@ export class AdminDashboard implements OnInit {
   newNurseFirstName = '';
   newNurseLastName = '';
 
-  searchTerm='';
+  searchTerm = '';
+
+  totalAppointments = '';
+  pendingAppointments = '';
+  confirmedAppointments = '';
+  completedAppointments = '';
+  cancelledAppointments = '';
   constructor(
     private authService: AuthService,
     private router: Router,
     private doctorsService: Doctors,
     private patientsService: Patients,
     private nursesService: Nurses,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private appointmentsService: Appointments
 
   ) { }
 
@@ -66,6 +74,17 @@ export class AdminDashboard implements OnInit {
       error: (err) => {
         console.error(err);
       }
+    });
+    this.appointmentsService.getAll().subscribe({
+      next: (data) => {
+        this.totalAppointments = data.length;
+        this.pendingAppointments = data.filter((a:any) => a.status === 'PENDING').length;
+        this.confirmedAppointments = data.filter((a:any) => a.status === 'CONFIRMED').length;
+        this.completedAppointments = data.filter((a:any) => a.status === 'COMPLETED').length;
+        this.cancelledAppointments = data.filter((a:any) => a.status === 'CANCELLED').length;
+        this.cdr.markForCheck();
+      },
+      error: (err: any) => console.error(err)
     });
   }
   createDoctor() {
@@ -131,13 +150,13 @@ export class AdminDashboard implements OnInit {
       error: (err) => console.error(err)
     });
   }
-  filterPatients(){
-    if(!this.searchTerm) return this.patients;
-    const term=this.searchTerm.toLowerCase();
-    return this.patients.filter((p)=>
-    p.firstName.toLowerCase().includes(term) ||
-    p.lastName.toLowerCase().includes(term) ||
-    p.user.email.toLowerCase().includes(term)
+  filterPatients() {
+    if (!this.searchTerm) return this.patients;
+    const term = this.searchTerm.toLowerCase();
+    return this.patients.filter((p) =>
+      p.firstName.toLowerCase().includes(term) ||
+      p.lastName.toLowerCase().includes(term) ||
+      p.user.email.toLowerCase().includes(term)
     );
   }
   logout() {

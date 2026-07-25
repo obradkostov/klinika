@@ -5,6 +5,18 @@
     </div>
     <a routerLink="/appointments">Termini</a>
     <div class="section">
+        <h3>Statistike</h3>
+        <p>Ukupno pacijenata: <strong>{{ patients.length }}</strong></p>
+        <p>Ukupno doktora: <strong>{{ doctors.length }}</strong></p>
+        <p>Ukupno medicinskih sestara: <strong>{{ nurses.length }}</strong></p>
+        <p>Ukupno termina: <strong>{{ totalAppointments }}</strong></p>
+        <p>Pending: <strong>{{ pendingAppointments }}</strong></p>
+        <p>Confirmed: <strong>{{ confirmedAppointments }}</strong></p>
+        <p>Completed: <strong>{{ completedAppointments }}</strong></p>
+        <p>Cancelled: <strong>{{ cancelledAppointments }}</strong></p>
+    </div>
+
+    <div class="section">
         <h3>Lista Doktora</h3>
         <ul>
             <li *ngFor="let doctor of doctors">
