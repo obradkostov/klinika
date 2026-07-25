@@ -19,6 +19,7 @@
           <strong>Nalaz:</strong> {{a.diagnosis.description}}
           <span *ngIf="a.diagnosis.prescription"> | Recept: {{a.diagnosis.prescription}}</span>
         </div>
+        <button *ngIf="a.status==='PENDING' || a.status==='CONFIRMED'" (click)="cancelAppointment(a.id)">Otkazi termin</button> 
       </li>
     </ul>
   </div>
