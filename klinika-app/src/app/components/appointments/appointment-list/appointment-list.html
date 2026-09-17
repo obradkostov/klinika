@@ -17,7 +17,6 @@
             <option *ngFor="let p of patientsList" [value]="p.id">{{ p.firstName }} {{ p.lastName }}</option>
         </select>
         <button type="button" (click)="createAppointment()">Zakaži termin</button>
-    </div>
     <select [(ngModel)]="filterStatus" name="filterStatus">
         <option value="">Svi termini</option>
         <option value="PENDING">Pending</option>
@@ -25,6 +24,8 @@
         <option value="CANCELLED">Cancelled</option>
         <option value="COMPLETED">Completed</option>
     </select>
+    </div>
+    
     <h3>Lista termina</h3>
     <ul>
         <li *ngFor="let a of filterAppointments()">

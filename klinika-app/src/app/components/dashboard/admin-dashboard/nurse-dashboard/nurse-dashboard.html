@@ -1,0 +1,21 @@
+<div class="nurse-container">
+  <div class="header">
+    <div>
+      <h2>Nurse Dashboard</h2>
+      <p>{{ fullName }}</p>
+      <p>{{ userName }}</p>
+    </div>
+    <button (click)="logout()">Odjavi se</button>
+  </div>
+
+  <div class="section">
+    <h3>Raspored termina</h3>
+    <ul>
+      <li *ngFor="let a of appointments">
+        {{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - Dr. {{a.doctor.firstName}} {{a.doctor.lastName}} -{{a.patient.firstName}} {{a.patient.lastName}} <br>
+      <button *ngIf="a.status==='PENDING'" (click)="confirmArrival(a.id)">Potvrdi dolazak</button>
+      <button *ngIf="a.status==='PENDING' || a.status==='CONFIRMED'" (click)="cancelAppointment(a.id)">Otkazi termin</button>
+      </li>
+    </ul>
+  </div>
+</div>
