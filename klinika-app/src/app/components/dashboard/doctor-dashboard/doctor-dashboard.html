@@ -12,7 +12,7 @@
     <div class="section">
         <h3>Moji termini</h3>
         <ul>
-            <li *ngFor="let a of appointments">
+            <!--<li *ngFor="let a of appointments">
                 <span>{{a.dateTime | date:'dd.MM.yyyy HH:mm'}} - {{a.reason}} - {{a.status}} - {{a.patient?.firstName}}
                     {{a.patient?.lastName}}</span>
                 <div class="actions">
@@ -25,7 +25,17 @@
                     <input [(ngModel)]="diagnosisPrescription" name="prescription" placeholder="Recept (opciono)">
                     <button (click)="submitDiagnosis()">Sačuvaj nalaz</button>
                 </div>
-            </li>
+            </li>-->
+            <app-appointment-item *ngFor="let a of appointments" [appointment]="a"
+                (confirm)="updateStatus($event, 'CONFIRMED')" (cancel)="updateStatus($event, 'CANCELLED')"
+                (diagnosis)="openDiagnosisForm($event)">
+            </app-appointment-item>
+            
+            <div class="diagnosis-form" *ngIf="selectedAppointmentId">
+                <input [(ngModel)]="diagnosisDescription" name="description" placeholder="Opis dijagnoze">
+                <input [(ngModel)]="diagnosisPrescription" name="prescription" placeholder="Recept (opciono)">
+                <button (click)="submitDiagnosis()">Sačuvaj nalaz</button>
+            </div>
         </ul>
     </div>
 </div>

@@ -6,10 +6,11 @@ import { Appointments } from '../../../services/appointments';
 import { FormsModule } from '@angular/forms';
 import { Diagnosis } from '../../../services/diagnosis';
 import { Doctors } from '../../../services/doctors';
+import { AppointmentItemComponent } from '../../appointments/appointment-item/appointment-item.component';
 
 @Component({
   selector: 'app-doctor-dashboard',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule,AppointmentItemComponent],
   templateUrl: './doctor-dashboard.html',
   styleUrl: './doctor-dashboard.css',
 })
@@ -51,13 +52,11 @@ export class DoctorDashboard implements OnInit {
     }
   }
   updateStatus(appointmentId: number, status: string) {
-    this.appointmentsService.updateStatus(appointmentId, status).subscribe({
-      next: () => {
-        this.ngOnInit();
-      },
-      error: (err) => console.error(err)
-    });
-  }
+  this.appointmentsService.updateStatus(appointmentId, status).subscribe({
+    next: () => this.ngOnInit(),
+    error: (err) => console.error(err)
+  });
+}
   openDiagnosisForm(appointmentId: number) {
     this.selectedAppointmentId = appointmentId;
     this.diagnosisDescription = '';

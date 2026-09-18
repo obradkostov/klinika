@@ -31,8 +31,9 @@ export class AppointmentList implements OnInit {
   patientsList: any[] = [];
   currentPatientId: number = 0;
   currentDoctorId: number = 0;
+  userRole='';
   minDateTime = new Date().toISOString().slice(0, 16);
-  userRole = this.authService.getUserFromToken()?.role || '';
+  
   filterStatus = '';
 
   constructor(
@@ -45,6 +46,7 @@ export class AppointmentList implements OnInit {
     private store: Store
   ) {
     this.appointments$ = this.store.select(selectAllAppointments);
+    this.userRole = this.authService.getUserFromToken()?.role || '';
   }
 
   ngOnInit() {
