@@ -33,7 +33,6 @@ export class AppointmentList implements OnInit {
   currentDoctorId: number = 0;
   userRole='';
   minDateTime = new Date().toISOString().slice(0, 16);
-  
   filterStatus = '';
 
   constructor(
@@ -45,7 +44,7 @@ export class AppointmentList implements OnInit {
     private authService: AuthService,
     private store: Store
   ) {
-    this.appointments$ = this.store.select(selectAllAppointments);
+    this.appointments$ = this.store.select(selectAllAppointments) as Observable<Appointment[]>;
     this.userRole = this.authService.getUserFromToken()?.role || '';
   }
 

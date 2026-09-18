@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Appointment } from '../../../models/interfaces';
-
 @Component({
   selector: 'app-appointment-item',
   standalone: true,
