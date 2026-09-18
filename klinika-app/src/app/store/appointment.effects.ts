@@ -12,12 +12,13 @@ export class AppointmentEffects {
       ofType(loadAppointments),
       switchMap(() =>
         this.appointmentsService.getAll().pipe(
-          map(appointments => loadAppointmentsSuccess({ appointments })),
+          map((appointments: any[]) => loadAppointmentsSuccess({ appointments })),
           catchError(error => of(loadAppointmentsFailure({ error: error.message })))
         )
       )
     )
   );
+
   constructor(
     private actions$: Actions,
     private appointmentsService: Appointments
