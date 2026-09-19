@@ -9,7 +9,11 @@ import { provideEffects } from '@ngrx/effects';
 import { AppointmentEffects } from './store/appointment.effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes),provideHttpClient()],
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes),
+    provideHttpClient(),
+    provideStore({ appointments: appointmentReducer }),
+    provideEffects([AppointmentEffects])
+  ],
 };
-provideStore({appointments:appointmentReducer}),
-provideEffects([AppointmentEffects])

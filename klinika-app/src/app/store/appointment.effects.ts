@@ -7,20 +7,22 @@ import { loadAppointments, loadAppointmentsSuccess, loadAppointmentsFailure } fr
 
 @Injectable()
 export class AppointmentEffects {
-  loadAppointments$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadAppointments),
-      switchMap(() =>
-        this.appointmentsService.getAll().pipe(
-          map((appointments: any[]) => loadAppointmentsSuccess({ appointments })),
-          catchError(error => of(loadAppointmentsFailure({ error: error.message })))
-        )
-      )
-    )
-  );
+  loadAppointments$: any;
 
   constructor(
     private actions$: Actions,
     private appointmentsService: Appointments
-  ) {}
+  ) {
+    this.loadAppointments$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(loadAppointments),
+        switchMap(() =>
+          this.appointmentsService.getAll().pipe(
+            map((appointments: any[]) => loadAppointmentsSuccess({ appointments })),
+            catchError(error => of(loadAppointmentsFailure({ error: error.message })))
+          )
+        )
+      )
+    );
+  }
 }

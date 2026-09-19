@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import type { Appointment } from '../models/interfaces';
+import { Appointment } from '../models/interfaces';
 
 export const loadAppointments = createAction('[Appointment] Load');
 export const loadAppointmentsSuccess = createAction(
