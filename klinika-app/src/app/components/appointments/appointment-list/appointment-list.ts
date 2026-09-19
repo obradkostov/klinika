@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, filter, take } from 'rxjs/operators';
+import { map, filter, take, skip } from 'rxjs/operators';
 import { Appointments } from '../../../services/appointments';
 import { Doctors } from '../../../services/doctors';
 import { Patients } from '../../../services/patients';
@@ -31,7 +31,7 @@ export class AppointmentList implements OnInit {
   patientsList: any[] = [];
   currentPatientId: number = 0;
   currentDoctorId: number = 0;
-  userRole='';
+  userRole = '';
   minDateTime = new Date().toISOString().slice(0, 16);
   filterStatus = '';
 
@@ -50,9 +50,9 @@ export class AppointmentList implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadAppointments());
-    
+
     this.appointments$.pipe(
-      filter(appointments => appointments.length > 0),
+      skip(1),
       take(1)
     ).subscribe(data => {
       const user = this.authService.getUserFromToken();
@@ -68,7 +68,7 @@ export class AppointmentList implements OnInit {
 
     this.doctorService.getAll().subscribe(data => this.doctorList = data);
     this.patientsService.getAll().subscribe(data => this.patientsList = data);
-    
+
     const user = this.authService.getUserFromToken();
     if (user?.role === 'PATIENT') {
       this.patientsService.getByUserId(user.sub).subscribe({
@@ -121,11 +121,13 @@ export class AppointmentList implements OnInit {
       patientId: user?.role === 'PATIENT' ? this.currentPatientId : +this.patientId
     }).subscribe({
       next: () => {
-        this.loadAppointments();
         this.dateTime = '';
         this.reason = '';
         this.doctorId = 0;
         this.patientId = 0;
+        setTimeout(() => {
+          this.store.dispatch(loadAppointments());
+        }, 500);
       },
       error: (err) => console.error(err)
     });
