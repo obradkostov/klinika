@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { loadAppointments } from '../../../store/appointment.actions';
 import { selectAllAppointments } from '../../../store/appointment.selectors';
 import { skip, take } from 'rxjs';
-import { Appointment } from '../../../models/interfaces';
+import { Appointment, Doctor, Nurse } from '../../../models/interfaces';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -164,10 +164,10 @@ export class AdminDashboard implements OnInit {
       p.user.email.toLowerCase().includes(term)
     );
   }
-  selectedDoctor: any = null;
+  selectedDoctor: Doctor | null = null;
   doctorAppointmentCount = 0;
 
-  selectDoctor(doctor: any) {
+  selectDoctor(doctor: Doctor) {
     if (this.selectedDoctor?.id === doctor.id) {
       this.selectedDoctor = null;
       return;
@@ -177,6 +177,7 @@ export class AdminDashboard implements OnInit {
       this.doctorAppointmentCount = data.filter(a => a.doctorId === doctor.id).length;
     });
   }
+
   logout() {
     this.authService.logOut();
     this.router.navigate(['/login']);
