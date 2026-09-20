@@ -7,6 +7,11 @@ import { Patients } from '../../../services/patients';
 import { Nurses } from '../../../services/nurses';
 import { FormsModule } from '@angular/forms';
 import { Appointments } from '../../../services/appointments';
+import { Store } from '@ngrx/store';
+import { loadAppointments } from '../../../store/appointment.actions';
+import { selectAllAppointments } from '../../../store/appointment.selectors';
+import { skip, take } from 'rxjs';
+import { Appointment } from '../../../models/interfaces';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -31,11 +36,11 @@ export class AdminDashboard implements OnInit {
 
   searchTerm = '';
 
-  totalAppointments = '';
-  pendingAppointments = '';
-  confirmedAppointments = '';
-  completedAppointments = '';
-  cancelledAppointments = '';
+  totalAppointments = 0;
+  pendingAppointments = 0;
+  confirmedAppointments = 0;
+  completedAppointments = 0;
+  cancelledAppointments = 0;
 
   activeSection = 'stats';
   constructor(
@@ -45,8 +50,8 @@ export class AdminDashboard implements OnInit {
     private patientsService: Patients,
     private nursesService: Nurses,
     private cdr: ChangeDetectorRef,
-    private appointmentsService: Appointments
-
+    private appointmentsService: Appointments,
+    private store: Store
   ) { }
 
   ngOnInit() {
@@ -77,16 +82,14 @@ export class AdminDashboard implements OnInit {
         console.error(err);
       }
     });
-    this.appointmentsService.getAll().subscribe({
-      next: (data) => {
-        this.totalAppointments = data.length;
-        this.pendingAppointments = data.filter((a:any) => a.status === 'PENDING').length;
-        this.confirmedAppointments = data.filter((a:any) => a.status === 'CONFIRMED').length;
-        this.completedAppointments = data.filter((a:any) => a.status === 'COMPLETED').length;
-        this.cancelledAppointments = data.filter((a:any) => a.status === 'CANCELLED').length;
-        this.cdr.markForCheck();
-      },
-      error: (err: any) => console.error(err)
+    this.store.dispatch(loadAppointments());
+    this.store.select(selectAllAppointments).pipe(skip(1), take(1)).subscribe((data: Appointment[]) => {
+      this.totalAppointments = data.length;
+      this.pendingAppointments = data.filter(a => a.status === 'PENDING').length;
+      this.confirmedAppointments = data.filter(a => a.status === 'CONFIRMED').length;
+      this.completedAppointments = data.filter(a => a.status === 'COMPLETED').length;
+      this.cancelledAppointments = data.filter(a => a.status === 'CANCELLED').length;
+      this.cdr.markForCheck();
     });
   }
   createDoctor() {
