@@ -27,9 +27,12 @@
     <div *ngIf="activeSection === 'doctors'" class="section">
         <h3>Lista Doktora</h3>
         <ul>
-            <li *ngFor="let doctor of doctors">
+            <li *ngFor="let doctor of doctors" (click)="selectDoctor(doctor)" class="clickable">
                 {{doctor.firstName}} {{doctor.lastName}} - {{doctor.specialization}} ({{doctor.user?.email}})
-                <button (click)="deleteDoctor(doctor.id)">Obriši</button>
+                <button (click)="$event.stopPropagation(); deleteDoctor(doctor.id)">Obriši</button>
+                <p *ngIf="selectedDoctor?.id === doctor.id" class="doctor-details">
+                    Ukupno termina: <strong>{{doctorAppointmentCount}}</strong>
+                </p>
             </li>
         </ul>
         <h4>Dodaj novog doktora</h4>

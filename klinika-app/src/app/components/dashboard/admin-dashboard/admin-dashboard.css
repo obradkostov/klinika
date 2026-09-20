@@ -67,6 +67,7 @@ li {
     margin-bottom: 8px;
     border-radius: 5px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     font-size: 16px;
@@ -112,4 +113,18 @@ h4 {
     width:100%;
     margin-top:5px;
     margin-left:0;
+}
+.clickable {
+  cursor: pointer;
+}
+.doctor-details {
+  margin-top: 8px;
+  padding: 8px;
+  background: #eaf4fb;
+  border-radius: 4px;
+  flex-basis: 100%;
+  box-shadow: none;
+  border: none;
+  max-width: 100%;
+  margin: 4px 0 0 0;
 }

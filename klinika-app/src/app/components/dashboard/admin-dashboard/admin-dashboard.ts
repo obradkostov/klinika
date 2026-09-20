@@ -164,6 +164,19 @@ export class AdminDashboard implements OnInit {
       p.user.email.toLowerCase().includes(term)
     );
   }
+  selectedDoctor: any = null;
+  doctorAppointmentCount = 0;
+
+  selectDoctor(doctor: any) {
+    if (this.selectedDoctor?.id === doctor.id) {
+      this.selectedDoctor = null;
+      return;
+    }
+    this.selectedDoctor = doctor;
+    this.store.select(selectAllAppointments).pipe(take(1)).subscribe((data: Appointment[]) => {
+      this.doctorAppointmentCount = data.filter(a => a.doctorId === doctor.id).length;
+    });
+  }
   logout() {
     this.authService.logOut();
     this.router.navigate(['/login']);
