@@ -11,7 +11,7 @@ import { Patients } from '../../../services/patients';
 import { AuthService } from '../../../services/auth.service';
 import { loadAppointments } from '../../../store/appointment.actions';
 import { selectAllAppointments } from '../../../store/appointment.selectors';
-import { Appointment } from '../../../models/interfaces';
+import { Appointment, Doctor, Patient } from '../../../models/interfaces';
 
 @Component({
   selector: 'app-appointment-list',
@@ -72,14 +72,14 @@ export class AppointmentList implements OnInit {
     const user = this.authService.getUserFromToken();
     if (user?.role === 'PATIENT') {
       this.patientsService.getByUserId(user.sub).subscribe({
-        next: (patient: any) => {
+        next: (patient: Patient) => {
           if (patient) this.currentPatientId = patient.id;
         }
       });
     }
     if (user?.role === 'DOCTOR') {
       this.doctorService.getByUserId(user.sub).subscribe({
-        next: (doctor: any) => {
+        next: (doctor: Doctor) => {
           if (doctor) this.currentDoctorId = doctor.id;
         },
         error: (err: any) => console.error(err)
